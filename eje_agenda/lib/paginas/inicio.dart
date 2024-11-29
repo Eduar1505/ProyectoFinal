@@ -1,3 +1,5 @@
+import 'package:eje_agenda/componentes.dart/botones.dart';
+import 'package:eje_agenda/paginas/home_page.dart';
 import 'package:flutter/material.dart';
 
 class StartPage extends StatelessWidget {
@@ -16,7 +18,7 @@ class StartPage extends StatelessWidget {
             const Text('eje agenda', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),),
             const SizedBox(height: 50,),
             
-            MyButton(onTap: (context) => HomePage()),
+            MyButton(onTap: (context) => const HomePage()),
           ]
         ),
       ),
