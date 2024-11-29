@@ -15,6 +15,8 @@ class StartPage extends StatelessWidget {
             const SizedBox(height: 20,),
             const Text('eje agenda', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),),
             const SizedBox(height: 50,),
+            
+            MyButton(onTap: (context) => HomePage()),
           ]
         ),
       ),
