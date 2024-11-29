@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
             padding: conts EdgeInsets.all(16.0),
             child: TextField(
               controller: _textController,
-              decoration: InputDecoraton(
+              decoration: InputDecoration(
                 labelText: 'Nuevo recordatorio',
                 border: OutlineInputBorder(),
               ),
