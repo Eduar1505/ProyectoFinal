@@ -11,6 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        navigationBarTheme: NavigationBarThemeData(labelTextStyle: WidgetStateProperty.all(
+          const TextStyle(color: Colors.white),
+        ))
+      ),
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
