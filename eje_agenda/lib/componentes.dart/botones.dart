@@ -13,16 +13,16 @@ class MyButton extends StatelessWidget {
         padding: const EdgeInsets.all(25),
         margin: const EdgeInsets.symmetric(horizontal: 25),
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: Colors.white70,
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
         child: const Center(
           child: Text(
             'CONTINUAR',
             style: TextStyle(
-              color: Colors.black,
+              color: Color.fromARGB(255, 4, 4, 4),
               fontWeight: FontWeight.bold,
-              fontSize: 40,
+              fontSize: 25,
             ),
           ),
         ),
