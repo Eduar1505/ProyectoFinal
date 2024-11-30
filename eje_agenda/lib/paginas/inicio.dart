@@ -1,5 +1,6 @@
 import 'package:eje_agenda/componentes.dart/botones.dart';
 import 'package:eje_agenda/paginas/home_page.dart';
+import 'package:eje_agenda/paginas/inicio2.dart';
 import 'package:flutter/material.dart';
 
 class StartPage extends StatelessWidget {
@@ -22,7 +23,7 @@ class StartPage extends StatelessWidget {
               onTap: (context) {
               Navigator.push(
                context,
-                MaterialPageRoute(builder: (context) => const HomePage()),
+                MaterialPageRoute(builder: (context) => const NamePage()),
             );
           },
         ),
