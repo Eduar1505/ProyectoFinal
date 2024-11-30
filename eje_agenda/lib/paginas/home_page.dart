@@ -25,7 +25,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return Scaffold(
-      // floatingActionButton: ,
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+
+        },
+        child: Icon(Icons.add_box_outlined, color: Colors.white,),
+        label: 'Agregar',
+      ),
       backgroundColor: Colors.black,
       bottomNavigationBar: NavigationBar(
         backgroundColor: const Color.fromARGB(66, 46, 46, 46),
