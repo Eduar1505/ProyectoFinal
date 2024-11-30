@@ -20,7 +20,7 @@ class MyButton extends StatelessWidget {
           child: Text(
             'CONTINUAR',
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontWeight: FontWeight.bold,
               fontSize: 40,
             ),
