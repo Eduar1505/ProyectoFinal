@@ -28,13 +28,13 @@ class _HomePageState extends State<HomePage> {
       // floatingActionButton: ,
       backgroundColor: Colors.black,
       bottomNavigationBar: NavigationBar(
-        backgroundColor: Color.fromARGB(66, 46, 46, 46),
+        backgroundColor: const Color.fromARGB(66, 46, 46, 46),
         onDestinationSelected: (int indice){
           setState((){
             indicePagina = indice;
           });
         },
-        indicatorColor: Color.fromARGB(255, 139, 139, 139),
+        indicatorColor: const Color.fromARGB(255, 139, 139, 139),
         // shadowColor: Colors.blue,
 
         selectedIndex: indicePagina,
