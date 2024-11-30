@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
             indicePagina = indice;
           });
         },
-        indicatorColor: Colors.black38,
+        indicatorColor: Color.fromARGB(255, 139, 139, 139),
         // shadowColor: Colors.blue,
 
         selectedIndex: indicePagina,
