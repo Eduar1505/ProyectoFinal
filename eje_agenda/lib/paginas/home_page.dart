@@ -1,3 +1,4 @@
+import 'package:eje_agenda/paginas/agregar_tareas.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -23,15 +24,24 @@ class _HomePageState extends State<HomePage> {
   }*/
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     final ThemeData theme = Theme.of(context);
     return Scaffold(
+
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () async {
+          // ignore: unused_local_variable
+          final nuevaTarea = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AgregarTareas(),),);
         },
+
         backgroundColor: const Color.fromARGB(255, 139, 139, 139),
         child: const Icon(Icons.add_to_photos, color: Colors.white),
         // label: 'Agregar',
       ),
+
       backgroundColor: Colors.black,
       bottomNavigationBar: NavigationBar(
         backgroundColor: const Color.fromARGB(66, 46, 46, 46),
