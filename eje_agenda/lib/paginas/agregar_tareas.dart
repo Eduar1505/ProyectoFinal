@@ -14,7 +14,7 @@ class _AgregarTareasState extends State<AgregarTareas> {
     return Scaffold(
       
       // Color de fondo 
-      backgroundColor: Colors.black,
+      // backgroundColor: Colors.black,
 
       appBar: AppBar(title: const Text('Agregar Tarea' ),centerTitle: true, /*backgroundColor: Colors.black*/ ),
       body: Padding(
@@ -35,12 +35,17 @@ class _AgregarTareasState extends State<AgregarTareas> {
                   border: OutlineInputBorder(borderRadius: BorderRadius.zero), 
                   label: Text('Descripcion'),
                   ),
+              ),
+              
+              const SizedBox(height: 20,),
 
-              )
             ],
-
           ),
         ),
     );
+  }
+
+  Widget _buildSectionContainer({required List<Widget> items}){
+    return Container();
   }
 }
