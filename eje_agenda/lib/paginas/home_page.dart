@@ -25,33 +25,40 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Colors.indigo[200],
+      // floatingActionButton: ,
+      backgroundColor: Colors.black,
       bottomNavigationBar: NavigationBar(
+        backgroundColor: Color.fromARGB(66, 46, 46, 46),
         onDestinationSelected: (int indice){
           setState((){
             indicePagina = indice;
           });
         },
-        indicatorColor: Colors.cyanAccent,
+        indicatorColor: Colors.black38,
+        // shadowColor: Colors.blue,
+
         selectedIndex: indicePagina,
         destinations: const<Widget>[
           NavigationDestination(
-            selectedIcon: Icon(Icons.chrome_reader_mode),
-            icon: Icon(Icons.chrome_reader_mode_outlined),
+            // selectedIcon: Icon(Icons.chrome_reader_mode),
+            icon: Icon(Icons.chrome_reader_mode_outlined, color: Colors.white,),
             label: 'Todos',
+            
           ),
           NavigationDestination(
-            icon: Badge(child: Icon(Icons.format_list_bulleted_add)),
+            icon: Badge(child: Icon(Icons.format_list_bulleted_add, color: Colors.white,)),
             label: 'Hoy',
+            // labelStyle: TextStyle(color: Color())
           ),
           NavigationDestination(
             icon: Badge(
               label: Text('4'),
-              child: Icon(Icons.heart_broken_outlined),
+              child: Icon(Icons.heart_broken_outlined, color: Colors.white,),
             ),
             label: 'Favoritos',
           ),
         ],
+        
       ),
 
       /*appBar: AppBar(
