@@ -27,10 +27,10 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-
         },
-        child: Icon(Icons.add_box_outlined, color: Colors.white,),
-        label: 'Agregar',
+        backgroundColor: const Color.fromARGB(255, 139, 139, 139),
+        child: const Icon(Icons.add_to_photos, color: Colors.white),
+        // label: 'Agregar',
       ),
       backgroundColor: Colors.black,
       bottomNavigationBar: NavigationBar(
