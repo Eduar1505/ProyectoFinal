@@ -8,10 +8,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<String> _recordatorios = [];
-  final TextEditingController _textController = TextEditingController();
+   int indicePagina = 0;
+  //final List<String> _recordatorios = [];
+  //final TextEditingController _textController = TextEditingController();
 
-  void _agregarRecordatorio(){
+  /*void _agregarRecordatorio(){
     String texto = _textController.text;
     if (texto.isNotEmpty){
       setState((){
@@ -19,11 +20,41 @@ class _HomePageState extends State<HomePage> {
         _textController.clear();
       });
     }
-  }
+  }*/
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(
+      backgroundColor: Colors.indigo[200],
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (int indice){
+          setState((){
+            indicePagina = indice;
+          });
+        },
+        indicatorColor: Colors.cyanAccent,
+        selectedIndex: indicePagina,
+        destinations: const<Widget>[
+          NavigationDestination(
+            selectedIcon: Icon(Icons.chrome_reader_mode),
+            icon: Icon(Icons.chrome_reader_mode_outlined),
+            label: 'Todos',
+          ),
+          NavigationDestination(
+            icon: Badge(child: Icon(Icons.format_list_bulleted_add)),
+            label: 'Hoy',
+          ),
+          NavigationDestination(
+            icon: Badge(
+              label: Text('4'),
+              child: Icon(Icons.heart_broken_outlined),
+            ),
+            label: 'Favoritos',
+          ),
+        ],
+      ),
+
+      /*appBar: AppBar(
         title: Text('Recordatorios'),
       ),
       body: Column(
@@ -53,7 +84,8 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ],
-      ),
+      ),*/
     );
+    
   }
 }
