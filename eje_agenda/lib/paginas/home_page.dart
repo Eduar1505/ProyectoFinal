@@ -1,5 +1,7 @@
-import 'package:eje_agenda/paginas/agregar_tareas.dart';
 import 'package:flutter/material.dart';
+import 'package:eje_agenda/database/db_helper.dart';
+import 'package:eje_agenda/paginas/agregar_tareas.dart';
+import 'package:eje_agenda/paginas/tarea.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,156 +11,154 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-   int indicePagina = 0;
-  //final List<String> _recordatorios = [];
-  //final TextEditingController _textController = TextEditingController();
+  int indicePagina = 0;
+  List<Tarea> tareas = [];
 
-  /*void _agregarRecordatorio(){
-    String texto = _textController.text;
-    if (texto.isNotEmpty){
-      setState((){
-        _recordatorios.add(texto);
-        _textController.clear();
-      });
+  @override
+  void initState() {
+    super.initState();
+    _cargarTareas();
+  }
+
+  Future<void> _cargarTareas() async {
+    final todasTareas = await DatabaseHelper().getTareas();
+    setState(() {
+      tareas = todasTareas;
+    });
+  }
+
+  List<Tarea> _filtrarTareas() {
+    DateTime hoy = DateTime.now();
+    switch (indicePagina) {
+      case 1: // Hoy
+        return tareas.where((t) =>
+            t.fecha.year == hoy.year &&
+            t.fecha.month == hoy.month &&
+            t.fecha.day == hoy.day).toList();
+      case 2: // Favoritos
+        return tareas.where((t) => t.esFavorito).toList();
+      default: // Todos
+        return tareas;
     }
-  }*/
+  }
+
+  Future<void> _editarTarea(Tarea tarea) async {
+    final tareaEditada = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AgregarTareas(tarea: tarea),
+      ),
+    );
+    if (tareaEditada != null) _cargarTareas();
+  }
+
+  Future<void> _eliminarTarea(int id) async {
+    await DatabaseHelper().deleteTarea(id);
+    _cargarTareas();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Tarea eliminada con éxito')),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
-    final ThemeData theme = Theme.of(context);
-    return Scaffold(
+    final tareasFiltradas = _filtrarTareas();
 
+    return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          // ignore: unused_local_variable
           final nuevaTarea = await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AgregarTareas(),),);
+              builder: (context) => const AgregarTareas(),
+            ),
+          );
+          if (nuevaTarea != null) _cargarTareas();
         },
-
         backgroundColor: Colors.black38,
-        child: const Icon(Icons.add_to_photos, color: Colors.white),
-        // label: 'Agregar',
+        child: const Icon(Icons.add, color: Colors.white),
       ),
-
-      backgroundColor: Colors.white,
       bottomNavigationBar: NavigationBar(
         backgroundColor: Colors.black38,
-        onDestinationSelected: (int indice){
-          setState((){
-            indicePagina = indice;
-          });
+        onDestinationSelected: (indice) {
+          setState(() => indicePagina = indice);
         },
-        indicatorColor: const Color.fromARGB(255, 139, 139, 139),
-        // shadowColor: Colors.blue,
-
         selectedIndex: indicePagina,
-        destinations: const<Widget>[
+        indicatorColor: const Color.fromARGB(255, 139, 139, 139),
+        destinations: const [
           NavigationDestination(
-            // selectedIcon: Icon(Icons.chrome_reader_mode),
-            icon: Icon(Icons.chrome_reader_mode_outlined, color: Colors.white,),
+            icon: Icon(Icons.list, color: Colors.white),
             label: 'Todos',
-            
           ),
           NavigationDestination(
-            icon: Icon(Icons.format_list_bulleted_add, color: Colors.white,),
+            icon: Icon(Icons.today, color: Colors.white),
             label: 'Hoy',
-            // labelStyle: TextStyle(color: Color())
           ),
           NavigationDestination(
-            icon: Icon(Icons.favorite, color: Colors.white,),
+            icon: Icon(Icons.favorite, color: Colors.white),
             label: 'Favoritos',
           ),
         ],
-        
       ),
-
-      body: <Widget>[
-        //TODAS LAS TAREAS
-        Card(
-          shadowColor: Colors.transparent,
-          margin: EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Text("Todas las tareas", style: theme.textTheme.titleLarge),
-          ),
-        ),
-        //TAREAS HOY
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications_sharp),
-                  title: Text("Ponete las pilas chele"),
-                  subtitle: Text("Mandame la funcion"),
-                ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: tareasFiltradas.isEmpty
+            ? const Center(child: Text('No hay tareas disponibles'))
+            : ListView.builder(
+                itemCount: tareasFiltradas.length,
+                itemBuilder: (context, index) {
+                  final tarea = tareasFiltradas[index];
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    elevation: 4,
+                    child: ListTile(
+                      title: Text(
+                        tarea.nombre,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            tarea.descripcion ?? 'Sin descripción',
+                            style: const TextStyle(color: Colors.grey),
+                          ),
+                          Text(
+                            'Fecha: ${tarea.fecha.toLocal()}  Hora: ${tarea.hora.format(context)}',
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                        ],
+                      ),
+                      trailing: PopupMenuButton<String>(
+                        icon: const Icon(Icons.more_vert),
+                        onSelected: (valor) {
+                          if (valor == 'editar') _editarTarea(tarea);
+                          if (valor == 'eliminar') _eliminarTarea(tarea.id!);
+                        },
+                        itemBuilder: (context) => [
+                          const PopupMenuItem(
+                            value: 'editar',
+                            child: Text('Editar'),
+                          ),
+                          const PopupMenuItem(
+                            value: 'eliminar',
+                            child: Text('Eliminar'),
+                          ),
+                        ],
+                      ),
+                      leading: tarea.esFavorito
+                          ? const Icon(Icons.favorite, color: Colors.red)
+                          : const Icon(Icons.task),
+                    ),
+                  );
+                },
               ),
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications_sharp),
-                  title: Text("Ponete las pilas chele"),
-                  subtitle: Text("Mandame la funcion pero ya jajaja"),
-                ),
-              ),
-            ],
-          ),
-        ),
-        //TAREAS FAVORITAS
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications_sharp),
-                  title: Text("Ponete las pilas Emerson"),
-                  subtitle: Text("termina la pantalla de inicio"),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications_sharp),
-                  title: Text("Ponete las pilas Emerson"),
-                  subtitle: Text("Mandame la funcion pero ya jajaja"),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ][currentPageIndex],
-      /*appBar: AppBar(
-        title: Text('Recordatorios'),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _textController,
-              decoration: InputDecoration(
-                labelText: 'Nuevo recordatorio',
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: _agregarRecordatorio,
-            child: Text('Agregar'),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _recordatorios.length,
-              itemBuilder: (context, index){
-                return ListTile(
-                  title: Text(_recordatorios[index]),
-                );
-              },
-            ),
-          ),
-        ],
-      ),*/
     );
   }
 }
