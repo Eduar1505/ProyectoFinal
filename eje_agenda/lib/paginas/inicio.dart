@@ -23,7 +23,7 @@ class StartPage extends StatelessWidget {
               onTap: (context) {
               Navigator.push(
                context,
-                MaterialPageRoute(builder: (context) => const HomePage()),
+                MaterialPageRoute(builder: (context) => const NamePage()),
             );
           },
         ),
