@@ -78,8 +78,8 @@ class _HomePageState extends State<HomePage> {
         //TODAS LAS TAREAS
         Card(
           shadowColor: Colors.transparent,
-          margin: conts EdgeInsets.all(8.0),
-          child: SisedBox.expand(
+          margin: EdgeInsets.all(8.0),
+          child: SizedBox.expand(
             child: Text("Todas las tareas", style: theme.textTheme.titleLarge),
           ),
         ),
