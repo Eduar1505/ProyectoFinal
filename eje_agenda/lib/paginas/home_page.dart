@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
         
       ),
 
-      body: <Widget>[
+    body: <Widget>[
         //TODAS LAS TAREAS
         Card(
           shadowColor: Colors.transparent,
