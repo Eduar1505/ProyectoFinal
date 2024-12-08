@@ -82,6 +82,27 @@ class _HomePageState extends State<HomePage> {
             child: Text("Todas las tareas", style: theme.textTheme.titleLarge),
           ),
         ),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+              Card(
+                child: ListTile(
+                  leading: Icon(Icons.notifications_sharp),
+                  title: Text("Ponete las pilas chele"),
+                  subtitle: Text("Mandame la funcion"),
+                ),
+              ),
+              Card(
+                child: ListTile(
+                  leading: Icon(Icons.notifications_sharp),
+                  title: Text("Ponete las pilas chele"),
+                  subtitle: Text("Mandame la funcion pero ya jajaja"),
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
       /*appBar: AppBar(
         title: Text('Recordatorios'),
