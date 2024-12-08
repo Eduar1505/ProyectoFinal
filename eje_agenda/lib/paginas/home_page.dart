@@ -75,6 +75,7 @@ class _HomePageState extends State<HomePage> {
       ),
 
       body: <Widget>[
+        //TODAS LAS TAREAS
         Card(
           shadowColor: Colors.transparent,
           margin: conts EdgeInsets.all(8.0),
@@ -82,6 +83,7 @@ class _HomePageState extends State<HomePage> {
             child: Text("Todas las tareas", style: theme.textTheme.titleLarge),
           ),
         ),
+        //TAREAS HOY
         const Padding(
           padding: EdgeInsets.all(8.0),
           child: Column(
@@ -97,6 +99,28 @@ class _HomePageState extends State<HomePage> {
                 child: ListTile(
                   leading: Icon(Icons.notifications_sharp),
                   title: Text("Ponete las pilas chele"),
+                  subtitle: Text("Mandame la funcion pero ya jajaja"),
+                ),
+              ),
+            ],
+          ),
+        ),
+        //TAREAS FAVORITAS
+        const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+              Card(
+                child: ListTile(
+                  leading: Icon(Icons.notifications_sharp),
+                  title: Text("Ponete las pilas Emerson"),
+                  subtitle: Text("termina la pantalla de inicio"),
+                ),
+              ),
+              Card(
+                child: ListTile(
+                  leading: Icon(Icons.notifications_sharp),
+                  title: Text("Ponete las pilas Emerson"),
                   subtitle: Text("Mandame la funcion pero ya jajaja"),
                 ),
               ),
