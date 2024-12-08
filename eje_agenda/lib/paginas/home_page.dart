@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
         
       ),
 
-    body: <Widget>[
+      body: <Widget>[
         //TODAS LAS TAREAS
         Card(
           shadowColor: Colors.transparent,
@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-      ],
+      ][currentPageIndex],
       /*appBar: AppBar(
         title: Text('Recordatorios'),
       ),
@@ -160,6 +160,5 @@ class _HomePageState extends State<HomePage> {
         ],
       ),*/
     );
-    
   }
 }
