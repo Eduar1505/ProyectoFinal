@@ -74,6 +74,15 @@ class _HomePageState extends State<HomePage> {
         
       ),
 
+      body: <Widget>[
+        Card(
+          shadowColor: Colors.transparent,
+          margin: conts EdgeInsets.all(8.0),
+          child: SisedBox.expand(
+            child: Text("Todas las tareas", style: theme.textTheme.titleLarge),
+          ),
+        ),
+      ],
       /*appBar: AppBar(
         title: Text('Recordatorios'),
       ),
