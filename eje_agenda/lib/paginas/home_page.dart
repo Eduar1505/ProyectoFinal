@@ -34,17 +34,17 @@ class _HomePageState extends State<HomePage> {
           final nuevaTarea = await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const AgregarTareas(),),);
+              builder: (context) => AgregarTareas(),),);
         },
 
-        backgroundColor: const Color.fromARGB(255, 139, 139, 139),
+        backgroundColor: Colors.black38,
         child: const Icon(Icons.add_to_photos, color: Colors.white),
         // label: 'Agregar',
       ),
 
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       bottomNavigationBar: NavigationBar(
-        backgroundColor: const Color.fromARGB(66, 46, 46, 46),
+        backgroundColor: Colors.black38,
         onDestinationSelected: (int indice){
           setState((){
             indicePagina = indice;
@@ -62,15 +62,12 @@ class _HomePageState extends State<HomePage> {
             
           ),
           NavigationDestination(
-            icon: Badge(child: Icon(Icons.format_list_bulleted_add, color: Colors.white,)),
+            icon: Icon(Icons.format_list_bulleted_add, color: Colors.white,),
             label: 'Hoy',
             // labelStyle: TextStyle(color: Color())
           ),
           NavigationDestination(
-            icon: Badge(
-              label: Text('4'),
-              child: Icon(Icons.heart_broken_outlined, color: Colors.white,),
-            ),
+            icon: Icon(Icons.favorite, color: Colors.white,),
             label: 'Favoritos',
           ),
         ],
