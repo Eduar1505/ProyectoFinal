@@ -4,6 +4,7 @@ import 'package:eje_agenda/paginas/home_page.dart';
 import 'package:eje_agenda/paginas/inicio.dart';
 import 'package:eje_agenda/paginas/splash.dart';
 
+//comentario
 // Inicialización de notificaciones
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
