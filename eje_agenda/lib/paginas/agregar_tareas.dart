@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:eje_agenda/database/db_helper.dart';
 import 'package:eje_agenda/paginas/tarea.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/data/latest_all.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
 
 class AgregarTareas extends StatefulWidget {
   final Tarea? tarea;
@@ -12,6 +9,7 @@ class AgregarTareas extends StatefulWidget {
   const AgregarTareas({super.key, this.tarea});
 
   @override
+  // ignore: library_private_types_in_public_api
   _AgregarTareasState createState() => _AgregarTareasState();
 }
 
@@ -22,20 +20,6 @@ class _AgregarTareasState extends State<AgregarTareas> {
   TimeOfDay? _horaSeleccionada;
   bool _esFavorito = false;
   bool _conNotificacion = false;
-
-  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-
-  @override
-  void initState() {
-    super.initState();
-    tz.initializeTimeZones();
-    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-    const androidInitSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
-    const initSettings = InitializationSettings(android: androidInitSettings);
-
-    flutterLocalNotificationsPlugin.initialize(initSettings);
-  }
 
   void _seleccionarFecha() async {
     DateTime? fecha = await showDatePicker(
@@ -51,7 +35,7 @@ class _AgregarTareasState extends State<AgregarTareas> {
     }
   }
 
-  void _seleccionarHora() async {
+void _seleccionarHora() async {
     TimeOfDay? hora = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
@@ -63,55 +47,23 @@ class _AgregarTareasState extends State<AgregarTareas> {
     }
   }
 
-  Future<void> _programarNotificacion(
-      {required int id, required String titulo, required String cuerpo, required DateTime fechaHora}) async {
-    const androidDetails = AndroidNotificationDetails(
-      'canal_tareas', // ID del canal
-      'Tareas', // Nombre del canal
-      channelDescription: 'Recordatorios de tareas',
-      importance: Importance.high,
-      priority: Priority.high,
-    );
-    const platformDetails = NotificationDetails(android: androidDetails);
-
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-      id,
-      titulo,
-      cuerpo,
-      tz.TZDateTime.from(fechaHora, tz.local),
-      platformDetails,
-      androidAllowWhileIdle: true,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-    );
-  }
-
   Future<void> _guardarTarea() async {
     String nombre = _nombreController.text.trim();
     String descripcion = _descripcionController.text.trim();
 
+    
     if (nombre.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('El nombre de la tarea es obligatorio')),
       );
       return;
     }
-
     if (_fechaSeleccionada == null || _horaSeleccionada == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Selecciona una fecha y hora')),
       );
       return;
     }
-
-    DateTime fechaHora = DateTime(
-      _fechaSeleccionada!.year,
-      _fechaSeleccionada!.month,
-      _fechaSeleccionada!.day,
-      _horaSeleccionada!.hour,
-      _horaSeleccionada!.minute,
-    );
-
     final nuevaTarea = Tarea(
       nombre: nombre,
       descripcion: descripcion,
@@ -120,18 +72,7 @@ class _AgregarTareasState extends State<AgregarTareas> {
       esFavorito: _esFavorito,
       conNotificacion: _conNotificacion,
     );
-
     await DatabaseHelper().insertTarea(nuevaTarea);
-
-    if (_conNotificacion) {
-      await _programarNotificacion(
-        id: DateTime.now().millisecondsSinceEpoch, // ID único para la notificación
-        titulo: 'Recordatorio: $nombre',
-        cuerpo: descripcion.isEmpty ? 'No olvides completar esta tarea.' : descripcion,
-        fechaHora: fechaHora,
-      );
-    }
-
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Tarea guardada con éxito')),
     );
@@ -193,6 +134,8 @@ class _AgregarTareasState extends State<AgregarTareas> {
               value: _conNotificacion,
               onChanged: (value) => setState(() => _conNotificacion = value),
             ),
+
+            
             const SizedBox(height: 20),
             Center(
               child: ElevatedButton(
@@ -200,8 +143,7 @@ class _AgregarTareasState extends State<AgregarTareas> {
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: Colors.black26,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
@@ -213,6 +155,7 @@ class _AgregarTareasState extends State<AgregarTareas> {
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
+                  
                   ),
                 ),
               ),
