@@ -50,6 +50,20 @@ class DatabaseHelper {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
+  //Obtener las tareas
+  Future<List<Tarea>> getTareas() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('tareas');
+    return List.generate(maps.length, (i) => Tarea.fromMap(maps[i]));
+  }
+
+  // Obtener tareas favoritas
+  Future<List<Tarea>> getFavoriteTasks() async {
+    final db = await database;
+    final result = await db.query('tareas', where: 'esFavorito = ?', whereArgs: [1]);
+    return result.map((task) => Tarea.fromMap(task)).toList();
+  }
+
 
 
 }
