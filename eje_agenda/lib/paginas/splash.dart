@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:eje_agenda/paginas/inicio.dart';
-//import 'package:eje_agenda/main.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,16 +12,16 @@ class _MyWidgetState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const StartPage()),
-      );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 3), () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const inicio()),
+        );
+      });
     });
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -47,7 +46,7 @@ class _MyWidgetState extends State<SplashScreen> {
               ),
             ),
             Image.asset(
-              'assets/images/unah_sistemas.png',
+              'lib/images/unah_sistemas.png',
               width: 200,
               height: 200,
             ),
