@@ -66,9 +66,9 @@ flutter:
   #   - images/a_dot_ham.jpeg
 
   assets:
-  - lib/images/unah_sistemas.png
-  - lib/images/fondo.jpg
-  - lib/images/unah_logo.png
+    - lib/images/unah_sistemas.png
+    - lib/images/fondo.jpg
+    - lib/images/unah_logo.png
 
   
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,16 +1,16 @@
+import 'package:eje_agenda/paginas/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:eje_agenda/componentes.dart/botones.dart';
-import 'package:eje_agenda/paginas/home_page.dart';
 
 
-class inicio extends StatefulWidget {
-  const inicio({super.key});
+class StartPage extends StatefulWidget {
+  const StartPage({super.key});
 
   @override
-  State<inicio> createState() => _inicioState();
+  State<StartPage> createState() => _StartPageState();
 }
 
-class _inicioState extends State<inicio> {
+class _StartPageState extends State<StartPage> {
   late Color myColor;
   late Size mediaSize;
 
@@ -91,7 +91,7 @@ class _inicioState extends State<inicio> {
           onTap: (context) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
+              MaterialPageRoute(builder: (context) => const SplashScreen()),
             );
           },
         ),

@@ -1,5 +1,6 @@
 import 'package:eje_agenda/paginas/home_page.dart';
 import 'package:eje_agenda/paginas/inicio.dart';
+import 'package:eje_agenda/paginas/splash.dart';
 // import 'package:eje_agenda/paginas/inicio.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const StartPage(),
         '/start' : (context) => const SplashScreen(),
+        '/start2' : (context) => const HomePage(),
       },
     );
   }
