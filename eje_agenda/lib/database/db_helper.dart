@@ -63,7 +63,23 @@ class DatabaseHelper {
     final result = await db.query('tareas', where: 'esFavorito = ?', whereArgs: [1]);
     return result.map((task) => Tarea.fromMap(task)).toList();
   }
+  
+  Future<int> updateTarea(Tarea tarea) async {
+    final db = await database;
+    return await db.update(
+      'tareas',
+      tarea.toMap(),
+      where: 'id = ?',
+      whereArgs: [tarea.id],
+    );
+  }
 
-
-
+  Future<int> deleteTarea(int id) async {
+    final db = await database;
+    return await db.delete(
+      'tareas',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }
