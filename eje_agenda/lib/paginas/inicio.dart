@@ -1,16 +1,16 @@
-import 'package:eje_agenda/paginas/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:eje_agenda/componentes.dart/botones.dart';
+import 'package:eje_agenda/paginas/splash.dart';
+import 'package:eje_agenda/paginas/home_page.dart';
 
-
-class StartPage extends StatefulWidget {
-  const StartPage({super.key});
+class inicio extends StatefulWidget {
+  const inicio({super.key});
 
   @override
-  State<StartPage> createState() => _StartPageState();
+  State<inicio> createState() => _inicioState();
 }
 
-class _StartPageState extends State<StartPage> {
+class _inicioState extends State<inicio> {
   late Color myColor;
   late Size mediaSize;
 
@@ -28,7 +28,6 @@ class _StartPageState extends State<StartPage> {
           colors: [Colors.indigo, Colors.black],
         ),
       ),
-      
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(children: [
@@ -75,7 +74,7 @@ class _StartPageState extends State<StartPage> {
           topRight: Radius.circular(30),
         )),
         child: Padding(
-          padding: const EdgeInsets.all(35.0),
+          padding: const EdgeInsets.all(30.0),
           child: Container(child: _buildForm()),
         ),
       ),
@@ -87,16 +86,23 @@ class _StartPageState extends State<StartPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        MyButton(
-          onTap: (context) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const SplashScreen()),
-            );
-          },
+        Center(
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(200, 60),
+              textStyle: const TextStyle(fontSize: 20),
+            ),
+            child: const Text('Continuar'),
+          ),
         ),
         Image.asset(
-          'assets/images/unah_logo.png',
+          'lib/images/unah_logo.png',
           width: 270,
           height: 200,
         ),
