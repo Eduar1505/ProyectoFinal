@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => const StartPage(),
+        '/': (context) => const inicio(),
         '/start': (context) => const SplashScreen(),
         '/start2': (context) => const HomePage(),
       },
