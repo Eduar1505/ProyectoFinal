@@ -27,5 +27,29 @@ class DatabaseHelper {
       onCreate: _onCreate,
     );
   }
+  Future<void> _onCreate(Database db, int version) async {
+    await db.execute('''
+      CREATE TABLE tareas (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nombre TEXT NOT NULL,
+        descripcion TEXT,
+        fecha TEXT NOT NULL,
+        hora TEXT NOT NULL,
+        esFavorito INTEGER NOT NULL,
+        conNotificacion INTEGER NOT NULL
+      )
+    ''');
+  }
+
+  // Insertar tareas
+  Future<int> insertTarea(Tarea tarea) async {
+    final db = await database;
+    return await db.insert(
+      'tareas',
+      tarea.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
 
 }
