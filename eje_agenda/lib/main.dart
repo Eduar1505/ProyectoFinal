@@ -38,8 +38,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => const StartPage(),
-        '/start': (context) => const SplashScreen(),
+        '/': (context) => const SplashScreen(),
+        '/start': (context) => const inicio(),
         '/start2': (context) => const HomePage(),
       },
     );
