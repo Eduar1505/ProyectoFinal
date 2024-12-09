@@ -35,5 +35,86 @@ class _AgregarTareasState extends State<AgregarTareas> {
     }
   }
 
-  
+void _seleccionarHora() async {
+    TimeOfDay? hora = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (hora != null) {
+      setState(() {
+        _horaSeleccionada = hora;
+      });
+    }
+  }
+
+  Future<void> _guardarTarea() async {
+    String nombre = _nombreController.text.trim();
+    String descripcion = _descripcionController.text.trim();
+
+    
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(title: const Text('Agregar Tarea')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
+          children: [
+            TextField(
+              controller: _nombreController,
+              decoration: const InputDecoration(
+                labelText: 'Nombre de la tarea',
+                border: OutlineInputBorder(),
+              ),
+              maxLength: 30,
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _descripcionController,
+              decoration: const InputDecoration(
+                labelText: 'Descripción',
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 3,
+            ),
+            const SizedBox(height: 16),
+            ListTile(
+              title: Text(
+                _fechaSeleccionada == null
+                    ? 'Seleccionar fecha'
+                    : DateFormat.yMMMd().format(_fechaSeleccionada!),
+              ),
+              trailing: const Icon(Icons.calendar_today),
+              onTap: _seleccionarFecha,
+            ),
+            ListTile(
+              title: Text(
+                _horaSeleccionada == null
+                    ? 'Seleccionar hora'
+                    : _horaSeleccionada!.format(context),
+              ),
+              trailing: const Icon(Icons.access_time),
+              onTap: _seleccionarHora,
+            ),
+            SwitchListTile(
+              title: const Text('Favorito'),
+              value: _esFavorito,
+              onChanged: (value) => setState(() => _esFavorito = value),
+            ),
+            SwitchListTile(
+              title: const Text('Notificaciones'),
+              value: _conNotificacion,
+              onChanged: (value) => setState(() => _conNotificacion = value),
+            ),
+
+
+            
+          ],
+        ),
+      ),
+    );
+  }  
 }
