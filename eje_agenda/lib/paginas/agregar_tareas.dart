@@ -51,7 +51,35 @@ void _seleccionarHora() async {
     String nombre = _nombreController.text.trim();
     String descripcion = _descripcionController.text.trim();
 
-    
+    if (nombre.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('El nombre de la tarea es obligatorio')),
+      );
+      return;
+    }
+
+    if (_fechaSeleccionada == null || _horaSeleccionada == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Selecciona una fecha y hora')),
+      );
+      return;
+    }
+
+    final nuevaTarea = Tarea(
+      nombre: nombre,
+      descripcion: descripcion,
+      fecha: _fechaSeleccionada!,
+      hora: _horaSeleccionada!,
+      esFavorito: _esFavorito,
+      conNotificacion: _conNotificacion,
+    );
+
+    await DatabaseHelper().insertTarea(nuevaTarea);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Tarea guardada con éxito')),
+    );
+    Navigator.pop(context, nuevaTarea);
   }
 
   @override
@@ -110,8 +138,30 @@ void _seleccionarHora() async {
               onChanged: (value) => setState(() => _conNotificacion = value),
             ),
 
-
-            
+            const SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                onPressed: _guardarTarea,
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.black26,
+                  padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  elevation: 5,
+                ),
+                child: const Text(
+                  'Guardar Tarea',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
